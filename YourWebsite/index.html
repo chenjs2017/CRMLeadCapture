@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Test lead Capture</title>
+    <script src="Scripts/jquery-2.1.0.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#LeadForm").submit(function (event) {
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost:4469/Api/CRMLead",
+                    data: $("#LeadForm").serialize(),
+                    dataType: 'json',
+                    success: function (response) {
+                        alert(response);
+                        $('#LeadForm').each(function () {
+                            this.reset(); //Reset each field
+                        });
+                    },
+                    error: function (request, textStatus, errorThrown) {
+                        alert(request.responseText + " " + textStatus + " " + errorThrown);
+                    }
+                });
+                event.preventDefault();
+            });
+        });
+    </script>
+</head>
+<body>
+    <form id="LeadForm">
+        <label for="FirstName">First Name</label>
+        <input type="text" id="FirstName" name="FirstName" />
+        <br />
+        <label for="LastName">Last Name</label>
+        <input type="text" id="LastName" name="LastName" />
+        <br />
+        <input type="submit" value="Submit" />
+    </form>
+</body>
+</html>
